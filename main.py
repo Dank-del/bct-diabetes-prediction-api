@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 from fastapi.responses import FileResponse
 import pandas as pd
+from fastapi.middleware.cors import CORSMiddleware
 from predict_diabetes import predict
 import joblib, uvicorn, logging
 from sklearn.model_selection import train_test_split
@@ -9,6 +10,13 @@ from sklearn.ensemble import RandomForestClassifier
 import seaborn as sns
 
 app = FastAPI(title="Diabetes Prediction API", version="1.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 log = logging.getLogger("uvicorn.info")
 
 @app.get("/")
