@@ -3,7 +3,7 @@ from fastapi.responses import FileResponse
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 from predict_diabetes import predict
-import joblib, uvicorn, logging
+import joblib, uvicorn, logging, os
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import RandomForestClassifier
@@ -63,4 +63,4 @@ async def startup_event():
     log.info("Model saved")
     
 if __name__ == "__main__":
-    uvicorn.run(app)
+    uvicorn.run(app, port=int(os.getenv("SERVER_PORT", 5000)))
